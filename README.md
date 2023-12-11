@@ -11,24 +11,24 @@ Esta API proporciona un servicio para obtener información de contribuyentes en 
 1. Clona el repositorio:
     ```
     git clone https://github.com/anderlfrias/rnc.api
-    ```js
+    ```
 
 2. Instala las dependencias:
     ```
     cd rnc.api
     npm install
-    ```js
+    ```
 
 ## Uso
 
 1. Inicia la API:
     ```
     npm run dev
-    ```js
+    ```
     **Nota**: Asegurate de tener `mongodb` installado
 
 2. Realiza una solicitud HTTP GET a la siguiente ruta:
     ```
     GET /scraping?rnc={rnc_que_desea_consultar}
-    ```js
+    ```
     
