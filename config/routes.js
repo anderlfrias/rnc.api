@@ -20,8 +20,8 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': 'HomeController.index',
-  'GET /scraping': 'ScrapingController.scraping',
-  'GET /rnc/:rnc': 'RNCController.getByRNC',
+  'GET /api/scraping': 'ScrapingController.scraping',
+  'GET /api/rnc/:rnc': 'RNCController.getByRNC',
 
 
   /***************************************************************************

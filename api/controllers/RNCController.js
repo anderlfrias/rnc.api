@@ -17,7 +17,7 @@ module.exports = {
       const rncEncontrado = await RNC.findOne({ rnc });
 
       if (rncEncontrado) {
-        return res.ok({ data: rncEncontrado });
+        return res.ok(rncEncontrado);
       }
 
       const resp = await sails.helpers.scrapingDgii(rnc);
@@ -30,12 +30,12 @@ module.exports = {
 
         if (!rncCreado) {
           return res.ok({
-            message: 'No se pudo crear el RNC',
-            data: resp.data
+            rnc,
+            datosContribuyente: resp.data
           });
         }
 
-        return res.ok({ data: rncCreado });
+        return res.ok(rncCreado);
       }
 
       console.log(resp);

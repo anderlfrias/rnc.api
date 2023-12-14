@@ -22,7 +22,7 @@
     "eslint": "5.16.0"
   },
   "scripts": {
-    "dev": "nodemon app.js",
+    "dev": "nodemon app.js --port=3001",
     "start": "NODE_ENV=production node app.js",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "./node_modules/eslint/bin/eslint.js . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",

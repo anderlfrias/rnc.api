@@ -31,7 +31,7 @@ module.exports = {
   },
 
 
-  fn: async function (inputs) {
+  fn: async function (inputs, exits) {
     // TODO
     try {
       const { rnc } = inputs;
@@ -76,17 +76,17 @@ module.exports = {
         };
       }
 
-      return {
+      return exits.success({
         success: true,
         message: 'Datos del contribuyente obtenidos correctamente',
         data: datosDelContribuyente
-      };
+      });
     } catch (error) {
-      return {
+      return exits.error({
         success: false,
         message: 'No se pudo obtener los datos del contribuyente',
         error
-      };
+      });
     }
   }
 
