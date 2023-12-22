@@ -18,11 +18,9 @@ module.exports = {
 
       const resp = await sails.helpers.scrapingDgii(rnc);
       if (resp.success) {
-
         return res.ok({ data: resp.data });
       }
 
-      console.log(resp);
       return res.badRequest(resp.message);
     } catch (err) {
       console.error(err);

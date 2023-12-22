@@ -38,7 +38,6 @@ module.exports = {
         return res.ok(rncCreado);
       }
 
-      console.log(resp);
       return res.badRequest(resp.message);
     } catch (err) {
       console.error(err);

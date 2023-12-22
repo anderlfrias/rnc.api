@@ -1,6 +1,9 @@
 const puppeteer = require('puppeteer');
-const { WEB_DGII, INPUT_RNC, BUTTON_RNC } = require('../../constants/dgii.constant');
+// const { WEB_DGII, INPUT_RNC, BUTTON_RNC } = require('../../constants/dgii.constant');
 
+const WEB_DGII = 'https://www.dgii.gov.do/app/WebApps/ConsultasWeb/consultas/rnc.aspx';
+const INPUT_RNC = 'input[id="ctl00_cphMain_txtRNCCedula"]';
+const BUTTON_RNC = 'input[id="ctl00_cphMain_btnBuscarPorRNC"]';
 module.exports = {
 
 
