@@ -41,10 +41,15 @@ module.exports = {
 
       // console.log('TABLE_DATOS_CONTRIBUYENTE', TABLE_DATOS_CONTRIBUYENTE);
 
-      const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({
+	headless: 'new',
+	executablePath: '/usr/bin/chromium-browser',
+  	args: ['--no-sandbox', '--disable-setuid-sandbox']
+      });
+
       const page = await browser.newPage();
       // Navega a la página del formulario
-      await page.goto(WEB_DGII);
+      await page.goto(WEB_DGII, { waitUntil: 'networkidle2', timeout: 60000 });
 
       // Completa el formulario con los datos necesarios
       await page.type(INPUT_RNC, rnc);
@@ -54,7 +59,7 @@ module.exports = {
       await page.click(BUTTON_RNC);
 
       // Espera a que la página cargue y renderice la tabla
-      await page.waitForSelector('#ctl00_cphMain_dvDatosContribuyentes tbody tr');
+      await page.waitForSelector('#ctl00_cphMain_dvDatosContribuyentes tbody tr', { timeout: 60000 });
 
       // Extrae los datos de la tabla
       const data = await page.evaluate(() => {
@@ -85,10 +90,11 @@ module.exports = {
         data: datosDelContribuyente
       });
     } catch (error) {
+	console.error('Error:', error);
       return exits.error({
         success: false,
         message: 'No se pudo obtener los datos del contribuyente',
-        error
+        error: error.message || error
       });
     }
   }

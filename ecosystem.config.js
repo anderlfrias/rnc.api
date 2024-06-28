@@ -1,10 +1,10 @@
 module.exports = {
   apps : [{
-    name   : 'rnc.api v2.0.0',
+    name   : 'rnc.api',
     script : './app.js',
     autorestart: true,
     env: {
-      PORT: 3003,
+      PORT: 3005,
     }
   }]
 };
