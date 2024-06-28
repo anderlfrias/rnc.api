@@ -52,7 +52,7 @@ module.exports.datastores = {
     // url: 'mysql://user:password@host:port/database',
 
     adapter: 'sails-mongo',
-    url: 'mongodb://0.0.0.0:27017/rnc-dev',
+    url: 'mongodb://0.0.0.0:27017/rnc',
   },
 
 
