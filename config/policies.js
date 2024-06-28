@@ -18,7 +18,7 @@ module.exports.policies = {
   ***************************************************************************/
 
   '*': true,
-  RNCController: {
-    '*': 'isLoggedIn',
-  },
+  // RNCController: {
+  //   '*': 'isLoggedIn',
+  // },
 };
