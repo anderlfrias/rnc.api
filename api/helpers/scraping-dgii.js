@@ -75,7 +75,7 @@ module.exports = {
         const item = data[i];
         datosDelContribuyente = {
           ...datosDelContribuyente,
-          [item[0]]: item[1]
+          [item[0]]: item[1].trim()
         };
       }
 
