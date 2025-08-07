@@ -21,7 +21,6 @@ module.exports = {
       }
 
       const resp = await sails.helpers.scrapingDgii(rnc);
-
       if (resp.success) {
         const rncCreado = await RNC.create({
           rnc,
@@ -38,7 +37,7 @@ module.exports = {
         return res.ok(rncCreado);
       }
 
-      return res.badRequest(resp.message);
+      return res.badRequest({ ...resp, err: resp.message || 'No se pudo obtener los datos del contribuyente' });
     } catch (err) {
       console.error(err);
       return res.serverError(err);
