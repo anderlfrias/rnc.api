@@ -1,9 +1,11 @@
 const puppeteer = require('puppeteer');
 // const { WEB_DGII, INPUT_RNC, BUTTON_RNC } = require('../../constants/dgii.constant');
 
-const WEB_DGII = 'https://www.dgii.gov.do/app/WebApps/ConsultasWeb/consultas/rnc.aspx';
-const INPUT_RNC = 'input[id="ctl00_cphMain_txtRNCCedula"]';
-const BUTTON_RNC = 'input[id="ctl00_cphMain_btnBuscarPorRNC"]';
+const WEB_DGII = 'https://dgii.gov.do/app/WebApps/ConsultasWeb2/ConsultasWeb/consultas/rnc.aspx';
+// const INPUT_RNC = 'input[id="ctl00_cphMain_txtRNCCedula"]';
+const INPUT_RNC = 'input[id="cphMain_txtRNCCedula"]';
+const BUTTON_RNC = 'input[id="cphMain_btnBuscarPorRNC"]';
+// const BUTTON_RNC = 'input[id="ctl00_cphMain_btnBuscarPorRNC"]';
 module.exports = {
 
 
@@ -42,14 +44,18 @@ module.exports = {
       // console.log('TABLE_DATOS_CONTRIBUYENTE', TABLE_DATOS_CONTRIBUYENTE);
 
       const browser = await puppeteer.launch({
-	headless: 'new',
-	executablePath: '/usr/bin/chromium-browser',
-  	args: ['--no-sandbox', '--disable-setuid-sandbox']
+        headless: 'new',
+        // executablePath: '/usr/bin/chromium-browser',
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
       });
 
       const page = await browser.newPage();
       // Navega a la página del formulario
       await page.goto(WEB_DGII, { waitUntil: 'networkidle2', timeout: 60000 });
+
+      await page.waitForSelector('#aBusquedaPorRNC', { timeout: 10000 });
+      await page.click('#aBusquedaPorRNC');
+      await page.waitForSelector(INPUT_RNC, { timeout: 10000 });
 
       // Completa el formulario con los datos necesarios
       await page.type(INPUT_RNC, rnc);
@@ -59,11 +65,13 @@ module.exports = {
       await page.click(BUTTON_RNC);
 
       // Espera a que la página cargue y renderice la tabla
-      await page.waitForSelector('#ctl00_cphMain_dvDatosContribuyentes tbody tr', { timeout: 60000 });
+      // await page.waitForSelector('#ctl00_cphMain_dvDatosContribuyentes tbody tr', { timeout: 60000 });
+      await page.waitForSelector('#cphMain_dvDatosContribuyentes tbody tr', { timeout: 60000 });
 
       // Extrae los datos de la tabla
       const data = await page.evaluate(() => {
-        const table = document.getElementById('ctl00_cphMain_dvDatosContribuyentes');
+        // const table = document.getElementById('ctl00_cphMain_dvDatosContribuyentes');
+        const table = document.getElementById('cphMain_dvDatosContribuyentes');
         const tbody = table.querySelector('tbody');
         const rows = Array.from(tbody.querySelectorAll('tr'));
         return rows.map(row => {
@@ -90,8 +98,8 @@ module.exports = {
         data: datosDelContribuyente
       });
     } catch (error) {
-	console.error('Error:', error);
-      return exits.error({
+      console.error('Error:', error);
+      return exits.success({
         success: false,
         message: 'No se pudo obtener los datos del contribuyente',
         error: error.message || error

@@ -21,7 +21,7 @@ module.exports = {
         return res.ok({ data: resp.data });
       }
 
-      return res.badRequest(resp.message);
+      return res.badRequest(resp);
     } catch (err) {
       console.error(err);
       return res.serverError(err);
