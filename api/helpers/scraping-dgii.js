@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const cheerio = require('cheerio');
 
 const URL_WEB_DGII = 'https://dgii.gov.do/app/WebApps/ConsultasWeb2/ConsultasWeb/consultas/rnc.aspx';
@@ -41,8 +41,14 @@ module.exports = {
     let browser;
     try {
       browser = await puppeteer.launch({
-        headless: true, // Run browser in background (invisible)
-        args: ['--no-sandbox', '--disable-setuid-sandbox'], // Required for some environments
+        executablePath: '/usr/bin/chromium-browser',
+        headless: 'new', // Use the modern headless mode
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-gpu',
+        ],
       });
       const page = await browser.newPage();
 

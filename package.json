@@ -11,7 +11,7 @@
     "cheerio": "^1.1.2",
     "grunt": "1.0.4",
     "jsonwebtoken": "^9.0.2",
-    "puppeteer": "^21.11.0",
+    "puppeteer-core": "^24.37.5",
     "sails": "^1.5.7",
     "sails-hook-grunt": "^5.0.0",
     "sails-hook-orm": "^4.0.0",
