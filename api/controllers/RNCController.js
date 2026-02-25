@@ -17,7 +17,25 @@ module.exports = {
       const rncEncontrado = await RNC.findOne({ rnc });
 
       if (rncEncontrado) {
-        return res.ok(rncEncontrado);
+        // Tiempo de Vida Util (TTL) de 30 días en milisegundos
+        const TTL_MS = 30 * 24 * 60 * 60 * 1000;
+        const ahora = new Date().getTime();
+        const ultimaActualizacion = new Date(rncEncontrado.updatedAt).getTime();
+
+        if (ahora - ultimaActualizacion < TTL_MS) {
+          return res.ok(rncEncontrado);
+        } else {
+          // Si expiró, realizar scrapingDGII nuevamente
+          const resp = await sails.helpers.scrapingDgii(rnc);
+          if (resp.success) {
+            const rncActualizado = await RNC.updateOne({ rnc }).set({
+              datosContribuyente: resp.data
+            });
+            return res.ok(rncActualizado || rncEncontrado);
+          }
+          // Si falla DGII, devolvemos el dato viejo que teníamos para no dejar sin respuesta
+          return res.ok(rncEncontrado);
+        }
       }
 
       const resp = await sails.helpers.scrapingDgii(rnc);
