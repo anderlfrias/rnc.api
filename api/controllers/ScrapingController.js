@@ -13,6 +13,11 @@ module.exports = {
         return res.badRequest('RNC requerido');
       }
 
+      const isRncValid = await sails.helpers.validarRnc(rnc);
+      if (!isRncValid) {
+        return res.badRequest({ message: 'El RNC o Cédula provisto tiene un formato o dígito verificador numérico inválido.' });
+      }
+
       const resp = await sails.helpers.scrapingDgii(rnc);
       if (resp.success) {
         return res.ok(resp);
